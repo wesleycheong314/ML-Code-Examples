@@ -4,15 +4,15 @@ from keras.datasets import mnist
 import matplotlib.pyplot as plt
 
 # Load MNIST dataset
-(X_train, y_train), _ = mnist.load_data()
+(X, y), _ = mnist.load_data()
 
 # Randomly select n samples
 n_samples = 1000
-idx = np.random.choice(X_train.shape[0], n_samples, replace=False)
-X_train, y_train = X_train[idx], y_train[idx]
+idx = np.random.choice(X.shape[0], n_samples, replace=False)
+X, y_train = X[idx], y[idx]
 
 # Reshape data to 2D arrays
-X_train_2d = X_train.reshape(X_train.shape[0], -1)
+X_2 = X.reshape(X.shape[0], -1)
 
 # Reduce dimensionality using Isomap, MDS, Spectral Embedding, and t-SNE for n=2 and n=3
 dimension_values = [2, 3]
@@ -22,7 +22,7 @@ X_reduced = []
 for dim in dimension_values:
     for reducer in dimension_reducers:
         model = reducer(n_components=dim)
-        X_reduced.append(model.fit_transform(X_train_2d))
+        X_reduced.append(model.fit_transform(X_2))
 
 fig = plt.figure()
 fig.suptitle('Manifold Learning Technique Comparision for MNIST')
